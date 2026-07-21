@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Whale Pvt Ltd — Application</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#081A32;
+    --navy:#0E2A50;
+    --blue:#1B4B91;
+    --cyan:#3FB6DE;
+    --ice:#EEF5FC;
+    --gold:#C8A24A;
+    --paper:#FBFDFF;
+    --ink:#0B1F3A;
+    --ink-soft:#5A6B85;
+    --ok:#2E9E6A;
+    --err:#C4432B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(63,182,222,0.18), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(200,162,74,0.10), transparent 55%),
+      linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 46%, var(--ice) 46%, var(--ice) 100%);
+    min-height:100vh;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .bubble{animation: rise linear infinite;}
+    .wave-line{animation: drift 18s linear infinite;}
+    .reveal{animation: rise-in 0.7s ease both;}
+  }
+  @keyframes rise{
+    0%{transform:translateY(0) scale(1); opacity:0;}
+    8%{opacity:0.55;}
+    100%{transform:translateY(-420px) scale(1.4); opacity:0;}
+  }
+  @keyframes drift{
+    0%{background-position-x:0;}
+    100%{background-position-x:1000px;}
+  }
+  @keyframes rise-in{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    max-width:880px;
+    margin:0 auto;
+    padding:64px 28px 140px;
+    text-align:center;
+    color:#fff;
+    overflow:hidden;
+  }
+  .bubble{
+    position:absolute;
+    bottom:-40px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.05) 70%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-size:12.5px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    font-weight:600;
+    margin-bottom:18px;
+  }
+  .whale-mark{
+    width:76px;
+    height:auto;
+    margin:0 auto 22px;
+    display:block;
+    filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(34px,5.4vw,54px);
+    line-height:1.08;
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--cyan);
+  }
+  .hero p{
+    font-size:16.5px;
+    color:#C9D8ED;
+    max-width:520px;
+    margin:0 auto;
+    line-height:1.6;
+  }
+  .loc-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:26px;
+    padding:9px 18px;
+    border:1px solid rgba(255,255,255,0.22);
+    border-radius:999px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(6px);
+    font-size:13.5px;
+    color:#fff;
+    letter-spacing:0.02em;
+  }
+
+  /* FORM CARD */
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px 90px;
+    position:relative;
+    top:-96px;
+  }
+  .card{
+    background:var(--paper);
+    border-radius:22px;
+    box-shadow:0 30px 70px -25px rgba(8,26,50,0.45), 0 2px 0 rgba(255,255,255,0.6) inset;
+    border:1px solid rgba(11,31,58,0.06);
+    overflow:hidden;
+  }
+  .card-header{
+    padding:34px 40px 22px;
+    border-bottom:1px solid rgba(11,31,58,0.08);
+  }
+  .card-header .step-label{
+    font-size:11.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+  }
+  .card-header h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:26px;
+    margin:6px 0 0;
+    color:var(--ink);
+  }
+  form{padding:8px 40px 40px;}
+  .section{
+    padding:26px 0;
+    border-bottom:1px solid rgba(11,31,58,0.07);
+  }
+  .section:last-of-type{border-bottom:none;}
+  .section-title{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .section-num{
+    font-family:'Fraunces',serif;
+    font-size:14px;
+    color:var(--gold);
+    font-weight:600;
+  }
+  .section-title h3{
+    font-size:15px;
+    margin:0;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    font-weight:700;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  .field{margin-bottom:0;}
+  .field.full{grid-column:1 / -1;}
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:7px;
+  }
+  .hint{
+    display:block;
+    font-size:12px;
+    color:var(--ink-soft);
+    font-weight:400;
+    margin-top:5px;
+  }
+  input[type=text], input[type=number], input[type=tel], select{
+    width:100%;
+    padding:13px 14px;
+    border-radius:10px;
+    border:1.5px solid #DCE6F2;
+    background:#fff;
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input::placeholder{color:#A6B4C8;}
+  input:focus, select:focus{
+    outline:none;
+    border-color:var(--blue);
+    box-shadow:0 0 0 4px rgba(27,75,145,0.12);
+  }
+  input:invalid[data-touched="true"]{border-color:var(--err);}
+  select{appearance:none; background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%235A6B85" stroke-width="2.4"><polyline points="6 9 12 15 18 9"/></svg>') no-repeat right 14px center;}
+
+  .upload{
+    border:1.6px dashed #C9D8ED;
+    border-radius:12px;
+    padding:22px;
+    text-align:center;
+    background:#F6FAFF;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .upload:hover{border-color:var(--blue); background:#F0F7FF;}
+  .upload input{display:none;}
+  .upload-label{font-size:14px; color:var(--blue); font-weight:600;}
+  .upload-sub{font-size:12px; color:var(--ink-soft); margin-top:4px;}
+  .file-name{margin-top:10px; font-size:13px; color:var(--ok); font-weight:600; display:none;}
+
+  .note{
+    background:#FFF7E9;
+    border:1px solid #EEDBA8;
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:12.8px;
+    color:#7A5B12;
+    line-height:1.55;
+  }
+
+  .btn-row{
+    display:flex;
+    gap:12px;
+    margin-top:8px;
+  }
+  .reset-btn{
+    flex:0 0 auto;
+    padding:16px 20px;
+    border:1.5px solid #DCE6F2;
+    border-radius:12px;
+    background:#fff;
+    color:var(--ink-soft);
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .reset-btn:hover{border-color:var(--err); color:var(--err); background:#FFF7F5;}
+  .reset-btn svg{width:16px; height:16px;}
+  .submit-btn{
+    flex:1;
+    margin-top:0;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg, var(--blue), var(--navy-deep));
+    color:#fff;
+    font-size:15.5px;
+    font-weight:700;
+    letter-spacing:0.01em;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 14px 30px -12px rgba(14,42,80,0.55);
+  }
+  .submit-btn:hover{transform:translateY(-1px); box-shadow:0 18px 36px -12px rgba(14,42,80,0.6);}
+  .submit-btn:active{transform:translateY(0);}
+  .submit-btn svg{width:18px; height:18px;}
+
+  .foot-note{
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:16px;
+  }
+  .success{
+    display:none;
+    text-align:center;
+    padding:50px 40px;
+  }
+  .success svg{width:52px; height:52px; color:var(--ok); margin-bottom:16px;}
+  .success h3{font-family:'Fraunces',serif; font-size:22px; margin:0 0 8px;}
+  .success p{color:var(--ink-soft); font-size:14px; line-height:1.6; max-width:380px; margin:0 auto;}
+
+  footer{
+    text-align:center;
+    padding:0 20px 50px;
+    color:var(--ink-soft);
+    font-size:12.5px;
+  }
+
+  @media (max-width:600px){
+    .grid{grid-template-columns:1fr;}
+    .card-header, form{padding-left:24px; padding-right:24px;}
+    .hero{padding:48px 20px 130px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="bubble" style="left:12%; width:10px; height:10px; animation-duration:7s; animation-delay:0s;"></div>
+  <div class="bubble" style="left:26%; width:16px; height:16px; animation-duration:9s; animation-delay:1.5s;"></div>
+  <div class="bubble" style="left:68%; width:8px; height:8px; animation-duration:6.5s; animation-delay:0.8s;"></div>
+  <div class="bubble" style="left:80%; width:14px; height:14px; animation-duration:10s; animation-delay:2.2s;"></div>
+  <div class="bubble" style="left:50%; width:6px; height:6px; animation-duration:5.5s; animation-delay:3s;"></div>
+
+  <svg class="whale-mark reveal" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 52c0-20 18-34 42-34 20 0 36 10 44 26 4 8 10 6 14 2-2 10-10 16-18 16-2 8-10 14-22 14-30 0-60-10-60-24z" fill="url(#g)"/>
+    <circle cx="34" cy="46" r="3" fill="#0B1F3A"/>
+    <path d="M40 10c2 6 2 10 -2 14 6 0 10-4 10-10-3-2-6-3-8-4z" fill="#3FB6DE"/>
+    <defs>
+      <linearGradient id="g" x1="8" y1="18" x2="108" y2="66" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#3FB6DE"/>
+        <stop offset="1" stop-color="#0E2A50"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="eyebrow reveal" style="animation-delay:.05s">Big Whale Pvt Ltd &nbsp;·&nbsp; We Are Hiring</div>
+  <h1 class="reveal" style="animation-delay:.1s">Tell us about <em>you</em>,<br>we'll take it from there.</h1>
+  <p class="reveal" style="animation-delay:.18s">A short application for open roles at Big Whale — advertising profile creator, website handling, brand promoter, profile management, ID creation and development source work.</p>
+  <div class="loc-pill reveal" style="animation-delay:.24s">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+    Hassan, Karnataka
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card reveal" style="animation-delay:.3s">
+    <div class="card-header">
+      <div class="step-label">Application Form</div>
+      <h2>Candidate details</h2>
+    </div>
+
+    <form id="appForm" novalidate>
+      <div class="section">
+        <div class="section-title"><span class="section-num">01</span><h3>Personal</h3></div>
+        <div class="grid">
+          <div class="field full">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" placeholder="As per your ID" required data-touched="false">
+          </div>
+          <div class="field">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" placeholder="e.g. 22" min="16" max="65" required data-touched="false">
+          </div>
+          <div class="field">
+            <label for="phone">Contact number</label>
+            <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required data-touched="false">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span class="section-num">02</span><h3>Education</h3></div>
+        <div class="grid">
+          <div class="field">
+            <label for="qualification">Highest qualification</label>
+            <select id="qualification" name="qualification" required data-touched="false">
+              <option value="" disabled selected>Select one</option>
+              <option>PUC</option>
+              <option>Diploma</option>
+              <option>ITI</option>
+              <option>Any Degree</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="status">Current status</label>
+            <select id="status" name="status" required data-touched="false">
+              <option value="" disabled selected>Select one</option>
+              <option>Fresher</option>
+              <option>Currently studying</option>
+              <option>Currently employed</option>
+              <option>Experienced, between roles</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="institution">College / institution name <span style="font-weight:400; color:var(--ink-soft);">(optional)</span></label>
+            <input type="text" id="institution" name="institution" placeholder="Where you studied">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span class="section-num">03</span><h3>Identity &amp; documents</h3></div>
+        <div class="grid">
+          <div class="field full">
+            <label for="aadhar">Aadhar number</label>
+            <input type="text" id="aadhar" name="aadhar" placeholder="XXXX XXXX XXXX" maxlength="14" pattern="[0-9\s]{12,14}" required data-touched="false">
+            <span class="hint">Used only for identity verification if shortlisted. Never share this with anyone outside the hiring process.</span>
+          </div>
+          <div class="field full">
+            <label for="resume">Resume / CV</label>
+            <div class="upload" id="uploadBox">
+              <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
+              <div class="upload-label">Click to upload your resume</div>
+              <div class="upload-sub">PDF or Word, up to 10MB</div>
+              <div class="file-name" id="fileName"></div>
+            </div>
+          </div>
+        </div>
+        <div class="note" style="margin-top:18px;">
+          Your name, age, education and status will be sent as a WhatsApp message to our hiring line. WhatsApp will open with your resume file selected — please attach it in the chat before sending, since it can't be attached automatically.
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" class="submit-btn">
+          Submit application
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <button type="button" class="reset-btn" id="resetBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+          Reset form
+        </button>
+      </div>
+      <div class="foot-note">By submitting, you agree to be contacted by Big Whale Pvt Ltd regarding this application.</div>
+    </form>
+
+    <div class="success" id="successView">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+      <h3>Opening WhatsApp…</h3>
+      <p>Your details are pre-filled in the chat with our hiring line. Attach your resume there and hit send to complete your application.</p>
+      <button type="button" class="reset-btn" id="resetBtn2" style="margin:24px auto 0; display:inline-flex;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        Start a new application
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>Big Whale Pvt Ltd &nbsp;·&nbsp; Hassan &nbsp;·&nbsp; 8217046153</footer>
+
+<script>
+  const form = document.getElementById('appForm');
+  const uploadBox = document.getElementById('uploadBox');
+  const resumeInput = document.getElementById('resume');
+  const fileName = document.getElementById('fileName');
+
+  uploadBox.addEventListener('click', () => resumeInput.click());
+  resumeInput.addEventListener('change', () => {
+    if(resumeInput.files.length){
+      fileName.textContent = '✓ ' + resumeInput.files[0].name;
+      fileName.style.display = 'block';
+    }
+  });
+
+  form.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('blur', () => el.setAttribute('data-touched', 'true'));
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    form.reset();
+    form.querySelectorAll('input, select').forEach(el => el.setAttribute('data-touched', 'false'));
+    fileName.style.display = 'none';
+    fileName.textContent = '';
+    form.style.display = 'block';
+    document.getElementById('successView').style.display = 'none';
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){
+      form.querySelectorAll('input, select').forEach(el => el.setAttribute('data-touched', 'true'));
+      form.reportValidity();
+      return;
+    }
+
+    const name = document.getElementById('name').value.trim();
+    const age = document.getElementById('age').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const qualification = document.getElementById('qualification').value;
+    const status = document.getElementById('status').value;
+    const institution = document.getElementById('institution').value.trim();
+    const aadharRaw = document.getElementById('aadhar').value.trim();
+    const aadharMasked = 'XXXX XXXX ' + aadharRaw.replace(/\s/g,'').slice(-4);
+
+    const lines = [
+      'New application — Big Whale Pvt Ltd',
+      'Name: ' + name,
+      'Age: ' + age,
+      'Contact: ' + phone,
+      'Qualification: ' + qualification,
+      'Status: ' + status,
+      institution ? 'Institution: ' + institution : null,
+      'Aadhar (last 4): ' + aadharMasked,
+      'Resume: will be attached in this chat'
+    ].filter(Boolean).join('\n');
+
+    const waNumber = '918217046153';
+    const waUrl = 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(lines);
+
+    form.style.display = 'none';
+    document.getElementById('successView').style.display = 'block';
+
+    window.open(waUrl, '_blank');
+  });
+
+  document.getElementById('resetBtn2').addEventListener('click', () => {
+    document.getElementById('resetBtn').click();
+  });
+</script>
+
+</body>
+</html>
